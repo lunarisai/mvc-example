@@ -5,7 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Author {
+public class Theme {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,6 +15,11 @@ public class Author {
     @Size(min = 3, max = 30)
     @Column(unique = true)
     private String name;
+
+    @NotNull
+    @Size(min = 3, max = 300)
+    @Column(unique = true)
+    private String description;
 
     public Long getId() {
         return id;
@@ -31,4 +37,11 @@ public class Author {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
