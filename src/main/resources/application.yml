@@ -10,6 +10,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: user
+    password:
+    h2:
+      console:
+        enabled: true
 logging:
   file: logs/mvc_dev.log
   level:
