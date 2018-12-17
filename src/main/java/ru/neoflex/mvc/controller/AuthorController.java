@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.neoflex.mvc.entity.Author;
-import ru.neoflex.mvc.exception.EntityNotFoundException;
+import ru.neoflex.mvc.exception.InternalServerException;
+import ru.neoflex.mvc.exception.NotFoundException;
 import ru.neoflex.mvc.repository.AuthorRepository;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/author")
@@ -51,7 +51,7 @@ public class AuthorController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, ModelMap model) {
 
-        Optional<Author> author = authorRepository.findById(id);
+        Author author = authorRepository.findOne(id);
         model.addAttribute("author", author);
 
         return "author/edit";
@@ -71,20 +71,23 @@ public class AuthorController {
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, ModelMap model) {
 
-        Optional<Author> author = authorRepository.findById(id);
+        Author author = authorRepository.findOne(id);
 
-        if (author.isPresent()) {
-            model.addAttribute("author", author.get());
+        if (id == 10)
+            throw new InternalServerException();
+
+        if (author != null) {
+            model.addAttribute("author", author);
             return "author/view";
         } else {
-            throw new EntityNotFoundException();
+            throw new NotFoundException();
         }
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
 
-        authorRepository.deleteById(id);
+        authorRepository.delete(id);
         return "redirect:/author/";
     }
 }

@@ -1,11 +1,9 @@
 package ru.neoflex.mvc.entity;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Role implements GrantedAuthority {
 
@@ -18,4 +16,34 @@ public class Role implements GrantedAuthority {
 
     @Column(unique = true)
     private String authority;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getAuthority() {
+        return authority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

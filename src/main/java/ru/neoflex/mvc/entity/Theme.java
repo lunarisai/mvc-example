@@ -1,12 +1,15 @@
 package ru.neoflex.mvc.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Theme {
 
@@ -15,13 +18,20 @@ public class Theme {
     private Long id;
 
     @NotNull
-    @Size(min = 3, max = 30)
     @Column(unique = true)
-    private String name;
+    @Size(min = 3, max = 30)
+    private String title;
 
     @NotNull
-    @Size(min = 3, max = 300)
-    @Column(unique = true)
+    @Size(min = 3)
     private String description;
+
+    public String getPrintTitle() {
+        return "Title: ".concat(title);
+    }
+
+    public String getPrintDescription() {
+        return "Description: ".concat(description);
+    }
 
 }
